@@ -106,7 +106,7 @@ Module.register("mmm-uk-pollen-forecast", {
             region_heading.parentNode.replaceChild(new_header, region_heading);
 
             // add line breaks to forecast text
-            if(self.config.show_forecast_text) {
+            if(this.config.show_forecast_text) {
                 var forecast = wrapper.getElementsByTagName("p")[0];
                 forecast.innerHTML=forecast.childNodes[0].nodeValue.replace(new RegExp('\\. ', 'g'), '. <br>');
             }
