@@ -82,7 +82,7 @@ module.exports = NodeHelper.create({
     
     writeHtmlFile: function(path, data){
         
-        console.log("writing pollen data file....");
+        console.log("writing pollen data file " + path +" ....");
         var stream = fs.createWriteStream(path);
         stream.once('open', function(fd) {
             stream.end(data);
