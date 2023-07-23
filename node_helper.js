@@ -54,7 +54,7 @@ module.exports = NodeHelper.create({
                 
                 console.log('Current directory: ', process.cwd());
 
-                const cacheDirectory = process.cwd() + "/modules/" + this.name + "/cache/";
+                const cacheDirectory = process.cwd() + "/modules/" + self.name + "/cache/";
                 const filename = new Date().getTime() + '.html';
                 const payload_filepath = cacheDirectory + filename;
                 const oldFiles = cacheDirectory + '*.html';
