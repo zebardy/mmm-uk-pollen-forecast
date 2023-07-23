@@ -27,24 +27,23 @@ Module.register("mmm-uk-pollen-forecast", {
         Log.info(this.name, ' config: ',  this.config);
 
         // days to show range
-        if(self.config.days_to_show < 0) {
-            self.config.days_to_show = 0;
+        if(this.config.days_to_show < 0) {
+            this.config.days_to_show = 0;
         }
-        if(self.config.days_to_show > 5 ) {
-            self.config.days_to_show = 5;
+        if(this.config.days_to_show > 5 ) {
+            this.config.days_to_show = 5;
         }
 
 
         this.getPollen();
         
-        self = this;
-        if(self.config.update_interval_hours < 0.25) {
-            self.config.update_interval_hours = 0.25;
+        if(this.config.update_interval_hours < 0.25) {
+            this.config.update_interval_hours = 0.25;
         }            
         
         setInterval(function() {
-            self.getPollen();
-        }, self.config.update_interval_hours * 3600000 );
+            this.getPollen();
+        }, this.config.update_interval_hours * 3600000 );
     },
 
     // Define required scripts.
@@ -57,8 +56,7 @@ Module.register("mmm-uk-pollen-forecast", {
     },
 
     getPollen: function() {
-        self = this;
-        if(self.moduleIsVisible() ==  false) {
+        if(this.moduleIsVisible() ==  false) {
             this.hide();
             return;
         } else {    
@@ -72,7 +70,6 @@ Module.register("mmm-uk-pollen-forecast", {
 
     socketNotificationReceived: function(notification, payload) {
         if (notification === "ACHHOOOOO") {
-            self = this;
             this.srcHtml = payload;
             Log.info("pollen data gathering: ", payload); 
             
@@ -130,9 +127,8 @@ Module.register("mmm-uk-pollen-forecast", {
 
 
     fiddleForecastTable: function(wrapper){
-        self = this;
 
-        const days_to_show = self.config.days_to_show;
+        const days_to_show = this.config.days_to_show;
 
         if(days_to_show == 5) { // do nothing
             return;
@@ -151,18 +147,17 @@ Module.register("mmm-uk-pollen-forecast", {
 
 
     moduleIsVisible: function () {
-        self = this;
         
-        if(self.config.first_display_date_DD_MM == 'always' || self.config.first_display_date_DD_MM == '' ) {
+        if(this.config.first_display_date_DD_MM == 'always' || this.config.first_display_date_DD_MM == '' ) {
             return true;
         }
-        if(self.config.last_display_date_DD_MM == 'always' || self.config.last_display_date_DD_MM == '' ) {
+        if(this.config.last_display_date_DD_MM == 'always' || this.config.last_display_date_DD_MM == '' ) {
             return true;
         }
         
         var now = moment();
-        var firstDay = moment(self.config.first_display_date_DD_MM + "-" + now.year().toString(), "DD-MM-YYYY");
-        var lastDay = moment(self.config.last_display_date_DD_MM +  "-" + now.year().toString(), "DD-MM-YYYY");
+        var firstDay = moment(this.config.first_display_date_DD_MM + "-" + now.year().toString(), "DD-MM-YYYY");
+        var lastDay = moment(this.config.last_display_date_DD_MM +  "-" + now.year().toString(), "DD-MM-YYYY");
 
         return now.isBetween(firstDay, lastDay, 'days', '[]');
 

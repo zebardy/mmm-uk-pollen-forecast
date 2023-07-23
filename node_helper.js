@@ -1,4 +1,4 @@
-const request = require('request');
+const axios = require('axios');
 const NodeHelper = require("node_helper");
 const cheerio = require("cheerio");
 const fs = require('fs');
@@ -27,16 +27,11 @@ module.exports = NodeHelper.create({
                         
             console.log('-> uk-pollen-forecast request');
             
-            request({
-                method: 'GET',
-                url: url
-            }, (err, res, body) => {
-            
-                if (err) return console.error(err);
-                
+            axios.get(url)
+              .then( function (response) {
                 // parse
-                const $ = cheerio.load(body);
-                
+                const $ = cheerio.load(response.data);
+
                 // we just need to extract the html for the supplied region...
 
                 const forecast_heading = $('#'+region + " h3.region-heading");
@@ -75,10 +70,10 @@ module.exports = NodeHelper.create({
                 else {
                     console.log('***  pollen data gathering failed! :( ');
                 }
-                
-                
-            });
-            
+              })
+              .catch( function (error) {
+                return console.error(error);
+              });
         }
     },
 
